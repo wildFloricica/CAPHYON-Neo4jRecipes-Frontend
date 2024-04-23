@@ -8,14 +8,23 @@ function App() {
   // eslint-disable-next-line no-unused-vars
   const [recipePage, setRecipePage] = useState(0);
   const [recipes, setRecipes] = useState([]);
+  const [querry, setQuerry] = useState("");
+
   useEffect(() => {
-    fetch(BACKEND_API + "recipes_page=" + recipePage)
+    fetch(BACKEND_API + "recipes", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ page_nr: recipePage, querry }),
+    })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
         setRecipes(data);
       });
-  }, [recipePage]);
+  }, [recipePage, querry]);
 
   return (
     <>
@@ -23,6 +32,17 @@ function App() {
         <button onClick={() => setRecipePage(recipePage - 1)}>⏮️</button>
         <a href="#">{recipePage}</a>
         <button onClick={() => setRecipePage(recipePage + 1)}>⏭️</button>
+      </div>
+
+      <div>
+        <label htmlFor="">
+          Search:
+          <input
+            type="text"
+            placeholder="🔎Search"
+            onInput={(e) => setQuerry(e.target.value)}
+          />
+        </label>
       </div>
 
       <h1>Recipe Table</h1>
