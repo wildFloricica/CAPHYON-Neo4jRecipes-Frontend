@@ -8,26 +8,55 @@ table * {
   transition: 0.8s;
 }
 table td:hover {
-  background-color: rgb(255, 255, 255);
+  background-color: rgba(169, 169, 0, 1);
   scale: 1.2;
-  color: rgb(0, 0, 0);
-  transition: 0.3s;
+  z-index: 10000;
+  transition: 0.4s;
 }
 table tr {
+  width: 100%;
   background-color: rgb(0, 17, 169);
   color: aliceblue;
+  transition: 0s;
 }
 table tr:nth-child(2n) {
-  background-color: rgb(169, 166, 0);
+  background-color: rgb(0, 107, 169);
 }
 
+table,
+thead {
+  -webkit-box-shadow: 0px 15px 75px 45px rgba(33, 1, 33, 0.71);
+  -moz-box-shadow: 0px 15px 75px 45px rgba(33, 1, 33, 0.71);
+}
 table {
+  box-shadow: 0px 15px 75px 45px rgba(33, 1, 33, 0.71);
+  max-width: 700px;
   border-radius: 10px;
+  transition: 0s;
 
   background-color: purple;
 }
-table thead,
-table thead * {
+table tr:hover {
+  background-color: rgba(169, 169, 0, 1);
+  color: aliceblue;
+  transition: 0.4;
+}
+thead,
+thead *,
+thead:hover,
+thead *:hover {
   background-color: purple;
   columns: aliceblue;
+}
+
+table * {
+  width: 100%;
+}
+thead {
+  position: sticky;
+  top: 20px;
+  z-index: 1999900;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
