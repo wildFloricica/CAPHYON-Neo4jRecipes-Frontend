@@ -1,0 +1,33 @@
+table * {
+  padding: 5px 8px;
+  margin-left: 20px;
+  margin-right: auto;
+  border: 1px solid purple;
+  text-align: justify;
+  position: relative;
+  transition: 0.8s;
+}
+table td:hover {
+  background-color: rgb(255, 255, 255);
+  scale: 1.2;
+  color: rgb(0, 0, 0);
+  transition: 0.3s;
+}
+table tr {
+  background-color: rgb(0, 17, 169);
+  color: aliceblue;
+}
+table tr:nth-child(2n) {
+  background-color: rgb(169, 166, 0);
+}
+
+table {
+  border-radius: 10px;
+
+  background-color: purple;
+}
+table thead,
+table thead * {
+  background-color: purple;
+  columns: aliceblue;
+}
