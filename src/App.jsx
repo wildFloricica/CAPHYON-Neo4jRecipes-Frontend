@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import RecipeElement from "./components/RecipeElement";
 
 const BACKEND_API = "http://localhost:3001/api/";
 
@@ -35,18 +36,13 @@ function App() {
           </tr>
         </thead>
         <tbody>
-          {recipes.map(({ properties, ingredients, author }) => {
-            var { name, skillLevel, elementId } = properties;
-
-            return (
-              <tr key={elementId}>
-                <td>{name}</td>
-                <td>{author.properties.name}</td>
-                <td>{ingredients.length}</td>
-                <td>{skillLevel}</td>
-              </tr>
-            );
-          })}
+          {recipes.map((recipe, index) => (
+            <RecipeElement
+              oddrow={index % 2}
+              key={recipe.elementId}
+              recipe={recipe}
+            ></RecipeElement>
+          ))}
         </tbody>
 
         <tfoot></tfoot>

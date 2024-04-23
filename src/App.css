@@ -7,7 +7,11 @@ table * {
   position: relative;
   transition: 0.8s;
 }
-table td:hover {
+
+table {
+  overflow: hidden;
+}
+.rowhover > *:hover {
   background-color: rgba(169, 169, 0, 1);
   scale: 1.2;
   z-index: 10000;
@@ -19,7 +23,7 @@ table tr {
   color: aliceblue;
   transition: 0s;
 }
-table tr:nth-child(2n) {
+.oddrow {
   background-color: rgb(0, 107, 169);
 }
 
@@ -36,7 +40,7 @@ table {
 
   background-color: purple;
 }
-table tr:hover {
+.rowhover:hover {
   background-color: rgba(169, 169, 0, 1);
   color: aliceblue;
   transition: 0.4;
