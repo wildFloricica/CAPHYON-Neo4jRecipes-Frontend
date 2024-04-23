@@ -28,15 +28,17 @@ function App() {
 
   return (
     <>
+      {/* pagination */}
       <div>
         <button onClick={() => setRecipePage(recipePage - 1)}>⏮️</button>
         <a href="#">{recipePage}</a>
         <button onClick={() => setRecipePage(recipePage + 1)}>⏭️</button>
       </div>
 
+      {/* by recipe name */}
       <div>
         <label htmlFor="">
-          Search:
+          Search by recipe name:
           <input
             type="text"
             placeholder="🔎Search"
