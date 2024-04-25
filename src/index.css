@@ -5,7 +5,22 @@ body {
   align-items: center;
   justify-content: center;
 }
-
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
 .hide {
   display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  html,
+  body {
+    color: aliceblue !important;
+    background-color: black !important;
+  }
+
+  :root {
+    --opacity_logo: 0.6 !important;
+  }
 }

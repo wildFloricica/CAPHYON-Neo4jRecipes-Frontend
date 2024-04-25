@@ -8,3 +8,7 @@ button {
 .asd {
   width: fit-content;
 }
+
+.aditionalinfo * {
+  margin: 0;
+}

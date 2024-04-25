@@ -5,7 +5,7 @@ export default function RecipeElement(props) {
   var { properties, ingredients, author } = props.recipe;
   var { name, skillLevel, elementId } = properties;
 
-  const [additionalInfo, setAdditionalInfo] = useState(0);
+  const [additionalInfo, setAdditionalInfo] = useState(true);
 
   return (
     <>
@@ -19,8 +19,8 @@ export default function RecipeElement(props) {
         <td>{ingredients.length}</td>
         <td>{skillLevel}</td>
       </tr>
-      <tr className={"asd " + (additionalInfo ? "" : "hide")}>
-        <td colSpan={4}>
+      <tr className={"asd aditionalinfo " + (additionalInfo ? "" : "hide")}>
+        <td style={{ padding: 0 }} colSpan={4}>
           <div>description: {properties.description}</div>
           <div>cooking time: {properties.cookingTime.low}</div>
           <div>preparation time: {properties.preparationTime.low}</div>
