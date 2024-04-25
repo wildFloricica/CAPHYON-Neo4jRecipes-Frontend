@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import RecipeElement from "./components/RecipeElement";
-
+import { WithContext as ReactTags } from "react-tag-input";
 const BACKEND_API = "http://localhost:3001/api/";
 
 function App(props) {
@@ -10,8 +10,20 @@ function App(props) {
   const [recipePage, setRecipePage] = useState(0);
   const [recipes, setRecipes] = useState([]);
   const [querry, setQuerry] = useState("");
+  const [tags, setTags] = useState([]);
+  const [suggestionss, setSuggestions] = useState([]);
+  const myIngrTags = tags.map((tag) => tag.text);
+  console.log(myIngrTags);
 
-  console.log(recipes);
+  useEffect(() => {
+    fetch(BACKEND_API + "all-ingredients")
+      .then((res) => res.json())
+      .then((data) => {
+        setSuggestions(data.map((it) => ({ id: it, name: it, text: it })));
+        console.log(suggestionss);
+      });
+  }, []);
+
   useEffect(() => {
     console.log(props?.byauthor, props?.author_name);
     fetch(BACKEND_API + (props?.byauthor ? "authors-recipes" : "recipes"), {
@@ -23,6 +35,7 @@ function App(props) {
       body: JSON.stringify({
         author_name: props?.author_name,
         page_nr: recipePage,
+        ingredientsQuerry: myIngrTags,
         querry,
       }),
     })
@@ -31,7 +44,30 @@ function App(props) {
         console.log(data);
         setRecipes(data);
       });
-  }, [recipePage, querry]);
+  }, [recipePage, querry, tags]);
+
+  const handleDelete = (i) => {
+    setTags(tags.filter((tag, index) => index !== i));
+  };
+
+  const handleAddition = (tag) => {
+    setTags([...tags, tag]);
+  };
+
+  const handleDrag = (tag, currPos, newPos) => {
+    const newTags = tags.slice();
+
+    newTags.splice(currPos, 1);
+    newTags.splice(newPos, 0, tag);
+
+    // re-render
+    setTags(newTags);
+    console.log("dragged", tags, newTags);
+  };
+
+  const handleTagClick = (index) => {
+    console.log("The tag at index " + index + " was clicked");
+  };
 
   return (
     <div className={props?.byauthor ? "greyall" : ""}>
@@ -54,6 +90,17 @@ function App(props) {
         </label>
       </div>
 
+      {/* by ingredients */}
+      <ReactTags
+        tags={tags}
+        suggestions={suggestionss}
+        handleDelete={handleDelete}
+        handleAddition={handleAddition}
+        handleDrag={handleDrag}
+        handleTagClick={handleTagClick}
+        inputFieldPosition="bottom"
+        autocomplete
+      />
       <h1>Recipe Table</h1>
       <table>
         <thead>
