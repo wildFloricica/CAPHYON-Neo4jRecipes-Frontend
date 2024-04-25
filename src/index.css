@@ -24,3 +24,8 @@ body {
     --opacity_logo: 0.6 !important;
   }
 }
+
+.greyall * {
+  color: aliceblue;
+  background-color: rgba(40, 40, 40, 0.964);
+}

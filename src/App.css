@@ -13,18 +13,16 @@ table {
 }
 .rowhover > *:hover {
   background-color: rgba(169, 169, 0, 1);
-  scale: 1.05;
   z-index: 10000;
   transition: 0.4s;
 }
 table tr {
   width: 100%;
-  background-color: rgb(0, 17, 169);
+  background-color: rgb(62, 0, 62);
   color: aliceblue;
   transition: 0s;
 }
 .oddrow {
-  background-color: rgb(0, 107, 169);
 }
 
 table,
@@ -49,8 +47,8 @@ thead,
 thead *,
 thead:hover,
 thead *:hover {
-  background-color: purple;
-  columns: aliceblue;
+  background-color: purple !important;
+  columns: aliceblue !important;
 }
 
 table * {

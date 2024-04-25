@@ -1,23 +1,30 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import "./App.css";
 import RecipeElement from "./components/RecipeElement";
 
 const BACKEND_API = "http://localhost:3001/api/";
 
-function App() {
+function App(props) {
   // eslint-disable-next-line no-unused-vars
   const [recipePage, setRecipePage] = useState(0);
   const [recipes, setRecipes] = useState([]);
   const [querry, setQuerry] = useState("");
 
+  console.log(recipes);
   useEffect(() => {
-    fetch(BACKEND_API + "recipes", {
+    console.log(props?.byauthor, props?.author_name);
+    fetch(BACKEND_API + (props?.byauthor ? "authors-recipes" : "recipes"), {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ page_nr: recipePage, querry }),
+      body: JSON.stringify({
+        author_name: props?.author_name,
+        page_nr: recipePage,
+        querry,
+      }),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -27,7 +34,7 @@ function App() {
   }, [recipePage, querry]);
 
   return (
-    <>
+    <div className={props?.byauthor ? "greyall" : ""}>
       {/* pagination */}
       <div>
         <button onClick={() => setRecipePage(recipePage - 1)}>⏮️</button>
@@ -60,6 +67,7 @@ function App() {
         <tbody>
           {recipes.map((recipe, index) => (
             <RecipeElement
+              allow_app_as_child={!props?.byauthor}
               oddrow={index % 2}
               key={recipe.elementId}
               recipe={recipe}
@@ -67,9 +75,13 @@ function App() {
           ))}
         </tbody>
 
-        <tfoot></tfoot>
+        <tfoot>
+          <tr className={recipes.length ? "hide" : ""}>
+            <td colSpan={4}>End of recipees</td>
+          </tr>
+        </tfoot>
       </table>
-    </>
+    </div>
   );
 }
 
