@@ -25,8 +25,12 @@ function App(props) {
   }, []);
 
   useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+
     console.log(props?.byauthor, props?.author_name);
     fetch(BACKEND_API + (props?.byauthor ? "authors-recipes" : "recipes"), {
+      signal,
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -44,6 +48,7 @@ function App(props) {
         console.log(data);
         setRecipes(data);
       });
+    return () => controller.abort();
   }, [recipePage, querry, tags]);
 
   const handleDelete = (i) => {
