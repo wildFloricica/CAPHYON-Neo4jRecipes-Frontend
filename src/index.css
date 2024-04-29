@@ -4,6 +4,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  font-family: "Poppins", Helvetica, Arial, sans-serif;
 }
 * {
   box-sizing: border-box;
@@ -13,6 +14,30 @@ body {
   display: none;
 }
 
+.credits,
+.credits > .banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+.credits > .banner {
+  font-size: 1rem;
+}
+.credits > .flex-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+:root {
+  --opacity_logo: 1;
+}
+.wilddd {
+  box-sizing: border-box;
+  margin: 5px;
+}
 @media (prefers-color-scheme: dark) {
   html,
   body {
@@ -28,4 +53,59 @@ body {
 .greyall * {
   color: aliceblue;
   background-color: rgba(40, 40, 40, 0.964);
+}
+
+@keyframes patrol {
+  0% {
+    transform: translate(0px, calc(var(--offset) * -1));
+  }
+  25% {
+    transform: translate(var(--offset), calc(var(--offset) * -1));
+  }
+  50% {
+    transform: translate(var(--offset), 0px);
+  }
+  75% {
+    transform: translate(0px, 0px);
+  }
+  100% {
+    transform: translate(0px, calc(var(--offset) * -1));
+  }
+}
+
+#wildfloricica-logo.animate {
+  animation: patrol 4s;
+  transition: 0.3s;
+
+  animation-iteration-count: infinite;
+}
+#wildfloricica-logo {
+  --offset: 20px;
+  background-color: rgba(240, 248, 255, 0.367);
+  transform: translate(15%, -20%);
+  border-radius: 20px;
+  padding: 0;
+  margin: 0;
+  transition: 0.1s;
+
+  text-align: center;
+  aspect-ratio: 1;
+  animation-iteration-count: infinite;
+  cursor: pointer;
+
+  position: fixed;
+  bottom: 30px;
+  left: 30px;
+  z-index: 9999999999;
+}
+#wildfloricica-logo:hover {
+  border-radius: 10px;
+  background-color: rgba(242, 0, 255, 0.633);
+}
+#wildfloricica-logo:active {
+  background-color: rgba(0, 177, 0, 0.718);
+}
+
+.credits img {
+  height: 50px;
 }

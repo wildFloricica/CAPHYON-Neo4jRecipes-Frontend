@@ -78,36 +78,36 @@ function App(props) {
         <button onClick={() => setRecipePage(recipePage + 1)}>⏭️</button>
       </div>
 
-      {/* by recipe name */}
-      <div>
+      <h3>🔎Search recipe</h3>
+      <div className="flex-right">
+        {/* by recipe name */}
         <label htmlFor="">
-          Search by recipe name:
           <input
             type="text"
-            placeholder="🔎Search"
+            placeholder="🔎by name"
             onInput={(e) => setQuerry(e.target.value)}
           />
         </label>
+        {/* by ingredients */}
+        <ReactTags
+          placeholder="🔎by ingredients"
+          tags={tags}
+          suggestions={suggestionss}
+          handleDelete={handleDelete}
+          handleAddition={handleAddition}
+          handleDrag={handleDrag}
+          handleTagClick={handleTagClick}
+          inputFieldPosition="bottom"
+          autocomplete
+        />
       </div>
 
-      {/* by ingredients */}
-      <ReactTags
-        tags={tags}
-        suggestions={suggestionss}
-        handleDelete={handleDelete}
-        handleAddition={handleAddition}
-        handleDrag={handleDrag}
-        handleTagClick={handleTagClick}
-        inputFieldPosition="bottom"
-        autocomplete
-      />
-      <h1>Recipe Table</h1>
       <table>
         <thead>
           <tr>
-            <td>name</td>
+            <td>recipe name</td>
             <td>author</td>
-            <td>ingredients</td>
+            <td style={{ wordWrap: "break-word" }}>number of ingredients</td>
             <td>skill level</td>
           </tr>
         </thead>

@@ -12,3 +12,9 @@ button {
 .aditionalinfo * {
   margin: 0;
 }
+tr * {
+  cursor: pointer;
+}
+.aditionalinfo * {
+  cursor: default;
+}

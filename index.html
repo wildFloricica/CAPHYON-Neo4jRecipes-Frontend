@@ -4,61 +4,47 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + React</title>
-    <style>
-      .credits {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.5rem;
-      }
-      .credits > .flex-right {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      :root {
-        --opacity_logo: 1;
-      }
-      .wilddd {
-        background-color: rgba(128, 0, 128, 0.334);
-        box-sizing: border-box;
-        margin: 5px;
-        background: rgb(215, 102, 70);
-        border-radius: 10px;
-        background: linear-gradient(
-          180deg,
-          rgba(215, 102, 70, 0) 4%,
-          rgba(215, 102, 70, var(--opacity_logo)) 4%,
-          rgba(215, 102, 70, var(--opacity_logo)) 32%,
-          rgba(82, 163, 208, var(--opacity_logo)) 32%,
-          rgba(82, 163, 208, var(--opacity_logo)) 68%,
-          rgba(252, 215, 63, var(--opacity_logo)) 68%,
-          rgba(252, 215, 63, var(--opacity_logo)) 96%,
-          rgba(252, 215, 63, 0) 96%
-        );
-      }
-    </style>
+    <style></style>
 
     <link
       rel="shortcut icon"
       href="./src/assets/caphyon-favicon-with-floricica2.png"
     />
+
+    <!-- separate the credits css from the rest -->
+    <!-- <link rel="stylesheet" href="./src/credits.css"> -->
   </head>
   <body>
     <div class="credits">
-      <div>Made Possible by...</div>
-      <div class="flex-right">
-        <img
-          class="wilddd"
-          src="./src/assets/wildfloricica_v1_0.png"
-          height="50"
-          alt=""
-        />
-        <div>&</div>
-        <img src="./src/assets/logo_Caphyon_RGB.webp" alt="" height="50" />
+      <div class="banner">
+        <div>Made Possible by...</div>
+        <img src="./src/assets/logo_Caphyon_RGB.webp" alt="" />
       </div>
+      <div id="wildfloricica-logo" class="animate">
+        <img class="wilddd" src="./src/assets/wildfloricica_v1_0.png" alt="" />
+      </div>
+
+      <script>
+        window.addEventListener("load", (e) => {
+          const logo = document.querySelector("#wildfloricica-logo");
+          var canFollow = false;
+          logo.onclick = () => {
+            canFollow = !canFollow;
+            logo.classList.toggle("animate");
+          };
+
+          const widthhh = logo.getBoundingClientRect().width / 2;
+          const heightt = logo.getBoundingClientRect().height / 2;
+
+          window.addEventListener("mousemove", (e) => {
+            if (canFollow) {
+              logo.style.left = e.clientX - widthhh + "px";
+              logo.style.top = e.clientY - heightt + "px";
+              logo.style.bottom = "unset";
+            }
+          });
+        });
+      </script>
     </div>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
