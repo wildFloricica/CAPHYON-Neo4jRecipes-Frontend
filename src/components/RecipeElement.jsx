@@ -10,8 +10,12 @@ export default function RecipeElement(props) {
   const [showAuthorsRecipes, setShowAuthorsRecipes] = useState(false);
   return (
     <>
+      {/* minimal info about recipe */}
       <tr
-        onClick={() => setAdditionalInfo(!additionalInfo)}
+        onClick={() => {
+          if (additionalInfo) setShowAuthorsRecipes(false);
+          setAdditionalInfo(!additionalInfo);
+        }}
         className={"rowhover" + (props.oddrow ? " oddrow" : "")}
         key={elementId}
       >
@@ -28,6 +32,8 @@ export default function RecipeElement(props) {
         <td>{ingredients.length}</td>
         <td>{skillLevel}</td>
       </tr>
+
+      {/* additional infos // authors recipes */}
       <tr
         className={
           "asd aditionalinfo " +
@@ -42,20 +48,16 @@ export default function RecipeElement(props) {
             <div>preparation time: {properties.preparationTime.low}</div>
             <div>
               ingredients:
-              {ingredients.map((ingredient) => (
-                <button key={ingredient.elementId}>
-                  {ingredient.properties.name}
-                </button>
+              {ingredients.map((i) => (
+                <button key={i.elementId}>{i.properties.name}</button>
               ))}
             </div>
           </div>
           {/* authors recipes */}
           {/* make that when it toggles again to keep the data and the page and all state */}
           {showAuthorsRecipes ? (
-            <App author_name={author.properties.name} />
-          ) : (
-            <></>
-          )}
+            <App authorName={author.properties.name} />
+          ) : null}
         </td>
       </tr>
     </>

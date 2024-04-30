@@ -5,19 +5,18 @@ import RecipeElement from "./components/RecipeElement";
 import { WithContext as ReactTags } from "react-tag-input";
 const BACKEND_API = "http://localhost:3001/api/";
 
-function App(props) {
-  // eslint-disable-next-line no-unused-vars
-  const [recipePage, setRecipePage] = useState(0);
+function App({ authorName }) {
+  const [pageNr, setPageNr] = useState(0);
   const [recipes, setRecipes] = useState([]);
   const [querry, setQuerry] = useState("");
   const [tags, setTags] = useState([]);
-  const [suggestionss, setSuggestions] = useState([]);
+  const [suggestions, setSuggestions] = useState([]);
   const [trimRecipeName, setTrimRecipeName] = useState(false);
   const [sortProperty, setSortProperty] = useState({
     property: "name",
     type: "ASC",
   });
-  const myIngrTags = tags.map((tag) => tag.text);
+  const ingredientsQuerry = tags.map((tag) => tag.text);
 
   useEffect(() => {
     fetch(BACKEND_API + "all-ingredients")
@@ -39,11 +38,11 @@ function App(props) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        author_name: props.author_name,
-        sortProperty: { ...sortProperty },
+        authorName,
+        sortProperty,
         trimRecipeName,
-        page_nr: recipePage,
-        ingredientsQuerry: myIngrTags,
+        pageNr,
+        ingredientsQuerry,
         querry,
       }),
     })
@@ -57,44 +56,34 @@ function App(props) {
         setRecipes(data);
       });
     return () => controller.abort();
-  }, [recipePage, querry, tags, sortProperty, trimRecipeName]);
+  }, [pageNr, querry, tags, sortProperty, trimRecipeName]);
 
-  const handleDelete = (i) => {
-    setTags(tags.filter((tag, index) => index !== i));
-  };
-
-  const handleAddition = (tag) => {
-    setTags([...tags, tag]);
-  };
-
+  const handleDelete = (i) => setTags(tags.filter((tag, index) => index !== i));
+  const handleAddition = (tag) => setTags([...tags, tag]);
   const handleDrag = (tag, currPos, newPos) => {
     const newTags = tags.slice();
-
     newTags.splice(currPos, 1);
     newTags.splice(newPos, 0, tag);
-
-    // re-render
     setTags(newTags);
   };
-  console.log("loaded");
   const handleTagClick = () => {};
 
   return (
-    <div className={props?.author_name ? "greyall" : ""}>
+    <div className={authorName ? "greyall" : ""}>
       {/* pagination */}
       <div>
-        <button onClick={() => setRecipePage(recipePage - 1)}>⏮️</button>
-        <a href="#">{recipePage}</a>
-        <button onClick={() => setRecipePage(recipePage + 1)}>⏭️</button>
+        <button onClick={() => setPageNr(pageNr - 1)}>⏮️</button>
+        <a href="#">{pageNr}</a>
+        <button onClick={() => setPageNr(pageNr + 1)}>⏭️</button>
       </div>
 
       <input
         type="checkbox"
         name=""
-        id="tttrrriiimmm"
+        id="trim-input"
         onInput={() => setTrimRecipeName((old) => !old)}
       />
-      <label htmlFor="tttrrriiimmm">Trim recipe name in backend:</label>
+      <label htmlFor="trim-input">Trim recipe name in backend:</label>
 
       <h3>🔎Search recipe</h3>
       <div className="flex-right">
@@ -109,13 +98,15 @@ function App(props) {
         {/* by ingredients */}
         <ReactTags
           placeholder="🔎by ingredients"
-          tags={tags}
-          suggestions={suggestionss}
-          handleDelete={handleDelete}
-          handleAddition={handleAddition}
-          handleDrag={handleDrag}
-          handleTagClick={handleTagClick}
           inputFieldPosition="bottom"
+          {...{
+            tags,
+            suggestions,
+            handleDelete,
+            handleAddition,
+            handleDrag,
+            handleTagClick,
+          }}
           autocomplete
         />
       </div>
@@ -177,7 +168,7 @@ function App(props) {
         <tbody>
           {recipes?.map((recipe, index) => (
             <RecipeElement
-              allow_app_as_child={!props?.author_name}
+              allow_app_as_child={!authorName}
               oddrow={index % 2}
               key={crypto.randomUUID()}
               recipe={recipe}
