@@ -2,12 +2,15 @@ table * {
   padding: 5px 8px;
   margin-left: 20px;
   margin-right: auto;
-  border: 1px solid purple;
+
   text-align: justify;
   position: relative;
   transition: 0.8s;
 }
 
+table td {
+  border: 1px solid purple;
+}
 table {
   overflow: hidden;
 }
@@ -43,13 +46,13 @@ table {
   color: aliceblue;
   transition: 0.4;
 }
-thead,
+/* thead,
 thead *,
 thead:hover,
 thead *:hover {
   background-color: purple !important;
   columns: aliceblue !important;
-}
+} */
 
 table * {
   width: 100%;
@@ -67,4 +70,40 @@ thead {
   display: flex;
   align-items: center;
   justify-content: start;
+}
+
+/*  */
+
+.sortertoggle * {
+  margin: 0;
+  padding: 0;
+  width: fit-content;
+}
+
+.sortertoggle .selected {
+  background-color: rgb(128, 0, 119);
+}
+
+.sortertoggle {
+  gap: 0;
+}
+
+.fillheight {
+  height: 100%;
+}
+
+.sortertoggle .up {
+  border-radius: 0;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+.sortertoggle .down {
+  border-radius: 0;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.sortertoggle button {
+  padding: 5px 8px;
+  background-color: gray;
 }

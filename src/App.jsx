@@ -12,15 +12,18 @@ function App(props) {
   const [querry, setQuerry] = useState("");
   const [tags, setTags] = useState([]);
   const [suggestionss, setSuggestions] = useState([]);
+  const [trimRecipeName, setTrimRecipeName] = useState(false);
+  const [sortProperty, setSortProperty] = useState({
+    property: "name",
+    type: "ASC",
+  });
   const myIngrTags = tags.map((tag) => tag.text);
-  console.log(myIngrTags);
 
   useEffect(() => {
     fetch(BACKEND_API + "all-ingredients")
       .then((res) => res.json())
       .then((data) => {
         setSuggestions(data.map((it) => ({ id: it, name: it, text: it })));
-        console.log(suggestionss);
       });
   }, []);
 
@@ -28,7 +31,6 @@ function App(props) {
     const controller = new AbortController();
     const signal = controller.signal;
 
-    console.log(props?.byauthor, props?.author_name);
     fetch(BACKEND_API + (props?.byauthor ? "authors-recipes" : "recipes"), {
       signal,
       method: "POST",
@@ -37,6 +39,8 @@ function App(props) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        sortProperty: { ...sortProperty },
+        trimRecipeName,
         author_name: props?.author_name,
         page_nr: recipePage,
         ingredientsQuerry: myIngrTags,
@@ -44,12 +48,16 @@ function App(props) {
       }),
     })
       .then((res) => res.json())
+      .catch((err) => {
+        if (err.name === "AbortError") {
+          console.log("AbortError: Fetch request aborted");
+        }
+      })
       .then((data) => {
-        console.log(data);
         setRecipes(data);
       });
     return () => controller.abort();
-  }, [recipePage, querry, tags]);
+  }, [recipePage, querry, tags, sortProperty, trimRecipeName]);
 
   const handleDelete = (i) => {
     setTags(tags.filter((tag, index) => index !== i));
@@ -67,12 +75,9 @@ function App(props) {
 
     // re-render
     setTags(newTags);
-    console.log("dragged", tags, newTags);
   };
-
-  const handleTagClick = (index) => {
-    console.log("The tag at index " + index + " was clicked");
-  };
+  console.log("loaded");
+  const handleTagClick = () => {};
 
   return (
     <div className={props?.byauthor ? "greyall" : ""}>
@@ -82,6 +87,14 @@ function App(props) {
         <a href="#">{recipePage}</a>
         <button onClick={() => setRecipePage(recipePage + 1)}>⏭️</button>
       </div>
+
+      <input
+        type="checkbox"
+        name=""
+        id="tttrrriiimmm"
+        onInput={() => setTrimRecipeName((old) => !old)}
+      />
+      <label htmlFor="tttrrriiimmm">Trim recipe name in backend:</label>
 
       <h3>🔎Search recipe</h3>
       <div className="flex-right">
@@ -112,23 +125,68 @@ function App(props) {
           <tr>
             <td>recipe name</td>
             <td>author</td>
-            <td style={{ wordWrap: "break-word" }}>number of ingredients</td>
-            <td>skill level</td>
+            <td>
+              <div className=" sortertoggle flex-right">
+                number of ingredients
+                <div className="flex-down">
+                  <button
+                    className="up"
+                    onClick={() =>
+                      setSortProperty({ property: "ingr_count", type: "ASC" })
+                    }
+                  >
+                    ASC
+                  </button>
+                  <button
+                    className="down"
+                    onClick={() =>
+                      setSortProperty({ property: "ingr_count", type: "DESC" })
+                    }
+                  >
+                    DES
+                  </button>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div className="sortertoggle flex-right">
+                skill level
+                <div className="flex-down">
+                  <button
+                    className="up"
+                    onClick={() =>
+                      setSortProperty({ property: "skillLevel", type: "ASC" })
+                    }
+                  >
+                    ASC
+                  </button>
+                  <button
+                    className="down"
+                    onClick={() =>
+                      setSortProperty({ property: "skillLevel", type: "DESC" })
+                    }
+                  >
+                    DES
+                  </button>
+                </div>
+                <div />
+              </div>
+            </td>
           </tr>
         </thead>
         <tbody>
-          {recipes.map((recipe, index) => (
+          {recipes?.map((recipe, index) => (
             <RecipeElement
               allow_app_as_child={!props?.byauthor}
               oddrow={index % 2}
-              key={recipe.elementId}
+              key={crypto.randomUUID()}
               recipe={recipe}
             ></RecipeElement>
           ))}
         </tbody>
 
         <tfoot>
-          <tr className={recipes.length ? "hide" : ""}>
+          <tr className={recipes?.length ? "hide" : ""}>
             <td colSpan={4}>End of recipees</td>
           </tr>
         </tfoot>
