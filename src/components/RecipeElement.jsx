@@ -52,7 +52,7 @@ export default function RecipeElement(props) {
           {/* authors recipes */}
           {/* make that when it toggles again to keep the data and the page and all state */}
           {showAuthorsRecipes ? (
-            <App byauthor={true} author_name={author.properties.name} />
+            <App author_name={author.properties.name} />
           ) : (
             <></>
           )}

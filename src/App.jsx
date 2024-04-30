@@ -31,7 +31,7 @@ function App(props) {
     const controller = new AbortController();
     const signal = controller.signal;
 
-    fetch(BACKEND_API + (props?.byauthor ? "authors-recipes" : "recipes"), {
+    fetch(BACKEND_API + "recipes", {
       signal,
       method: "POST",
       headers: {
@@ -39,9 +39,9 @@ function App(props) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        author_name: props.author_name,
         sortProperty: { ...sortProperty },
         trimRecipeName,
-        author_name: props?.author_name,
         page_nr: recipePage,
         ingredientsQuerry: myIngrTags,
         querry,
@@ -80,7 +80,7 @@ function App(props) {
   const handleTagClick = () => {};
 
   return (
-    <div className={props?.byauthor ? "greyall" : ""}>
+    <div className={props?.author_name ? "greyall" : ""}>
       {/* pagination */}
       <div>
         <button onClick={() => setRecipePage(recipePage - 1)}>⏮️</button>
@@ -177,7 +177,7 @@ function App(props) {
         <tbody>
           {recipes?.map((recipe, index) => (
             <RecipeElement
-              allow_app_as_child={!props?.byauthor}
+              allow_app_as_child={!props?.author_name}
               oddrow={index % 2}
               key={crypto.randomUUID()}
               recipe={recipe}
