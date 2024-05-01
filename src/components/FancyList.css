@@ -22,12 +22,13 @@
 .fancylist:hover {
   overflow: auto;
 }
-
-.fancylist .fancy-title {
+.fancy-title {
   position: sticky;
   left: 0;
   top: -20px;
   z-index: 9999;
+  min-width: max-content;
+  max-width: max-content;
 }
 /* Hide scrollbar for Chrome, Safari and Opera */
 .fancylist::-webkit-scrollbar {
@@ -38,4 +39,12 @@
 .fancylist {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+}
+
+.flex-right-hugger {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin: 0;
+  padding: 0;
 }
