@@ -7,16 +7,35 @@
   max-width: inherit;
   overflow: hidden;
   padding: 10px;
-  justify-content: start;
+  justify-content: start !important;
   align-items: stretch;
   gap: 1px;
+  padding-bottom: 0;
+  padding-top: 0;
 }
 
 .fancylist > * {
-  width: fit-content;
-  min-height: 100%;
+  min-width: max-content;
+  width: max-content;
 }
 
 .fancylist:hover {
   overflow: auto;
+}
+
+.fancylist .fancy-title {
+  position: sticky;
+  left: 0;
+  top: -20px;
+  z-index: 9999;
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.fancylist::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.fancylist {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }

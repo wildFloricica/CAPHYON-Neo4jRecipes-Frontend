@@ -46,13 +46,13 @@ export default function RecipeElement(props) {
         <td style={{ padding: 0 }} colSpan={4}>
           {/* additional info */}
           <div className={additionalInfo ? "" : "hide"}>
-            <div>description: {properties.description}</div>
-            <div>cooking time: {properties.cookingTime.low}</div>
-            <div>preparation time: {properties.preparationTime.low}</div>
-            <div>dietType: {dietType}</div>
-            <FancyList list={ingredients} special={iq} name="ingredients" />
-            <FancyList list={keywords} name="keywords" />
-            <FancyList list={collections} name="collections" />
+            <div>📝description: {properties.description}</div>
+            <div>⌛cooking time: {properties.cookingTime.low}</div>
+            <div>⌛preparation time: {properties.preparationTime.low}</div>
+            <div>🥗dietType: {dietType}</div>
+            <FancyList list={ingredients} special={iq} name="🥕ingredients" />
+            <FancyList list={keywords} name="🔑keywords" />
+            <FancyList list={collections} name="🗂️collections" />
           </div>
           {/* authors recipes */}
           {/* make that when it toggles again to keep the data and the page and all state */}
