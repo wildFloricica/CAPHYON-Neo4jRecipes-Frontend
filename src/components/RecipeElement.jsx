@@ -5,7 +5,7 @@ import App from "../App";
 /* eslint-disable react/prop-types */
 export default function RecipeElement(props) {
   const iq = props.ingredientsQuerry;
-  var { author, ingredients, collections, keywords, dietType, properties } =
+  var { author, ingredients, collections, keywords, dietTypes, properties } =
     props.recipe;
   var { name, skillLevel, elementId } = properties;
 
@@ -49,7 +49,7 @@ export default function RecipeElement(props) {
             <div>📝description: {properties.description}</div>
             <div>⌛cooking time: {properties.cookingTime.low}</div>
             <div>⌛preparation time: {properties.preparationTime.low}</div>
-            <div>🥗dietType: {dietType}</div>
+            <FancyList list={dietTypes} name="🥗diet types" />
             <FancyList list={ingredients} special={iq} name="🥕ingredients" />
             <FancyList list={keywords} name="🔑keywords" />
             <FancyList list={collections} name="🗂️collections" />
