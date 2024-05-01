@@ -3,7 +3,8 @@ import "./RecipeElement.css";
 import App from "../App";
 /* eslint-disable react/prop-types */
 export default function RecipeElement(props) {
-  var { properties, ingredients, author } = props.recipe;
+  var { author, ingredients, collections, keywords, dietType, properties } =
+    props.recipe;
   var { name, skillLevel, elementId } = properties;
 
   const [additionalInfo, setAdditionalInfo] = useState(false);
@@ -27,7 +28,7 @@ export default function RecipeElement(props) {
               setShowAuthorsRecipes(!showAuthorsRecipes);
           }}
         >
-          {author.properties.name}
+          {author}
         </td>
         <td>{ingredients.length}</td>
         <td>{skillLevel}</td>
@@ -46,18 +47,30 @@ export default function RecipeElement(props) {
             <div>description: {properties.description}</div>
             <div>cooking time: {properties.cookingTime.low}</div>
             <div>preparation time: {properties.preparationTime.low}</div>
+            <div>dietType: {dietType}</div>
+
             <div>
               ingredients:
               {ingredients.map((i) => (
-                <button key={i.elementId}>{i.properties.name}</button>
+                <button key={crypto.randomUUID()}>{i}</button>
+              ))}
+            </div>
+            <div>
+              collections:
+              {collections.map((i) => (
+                <button key={crypto.randomUUID()}>{i}</button>
+              ))}
+            </div>
+            <div>
+              keywords:
+              {keywords.map((i) => (
+                <button key={crypto.randomUUID()}>{i}</button>
               ))}
             </div>
           </div>
           {/* authors recipes */}
           {/* make that when it toggles again to keep the data and the page and all state */}
-          {showAuthorsRecipes ? (
-            <App authorName={author.properties.name} />
-          ) : null}
+          {showAuthorsRecipes ? <App authorName={author} /> : null}
         </td>
       </tr>
     </>

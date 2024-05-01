@@ -5,6 +5,8 @@ import RecipeElement from "./components/RecipeElement";
 import { WithContext as ReactTags } from "react-tag-input";
 const BACKEND_API = "http://localhost:3001/api/";
 
+var tiid = undefined;
+
 function App({ authorName }) {
   const [pageNr, setPageNr] = useState(0);
   const [recipes, setRecipes] = useState([]);
@@ -54,6 +56,7 @@ function App({ authorName }) {
       })
       .then((data) => {
         setRecipes(data);
+        console.log(data);
       });
     return () => controller.abort();
   }, [pageNr, querry, tags, sortProperty, trimRecipeName]);
@@ -67,16 +70,27 @@ function App({ authorName }) {
     setTags(newTags);
   };
   const handleTagClick = () => {};
-
+  console.log("rerender");
   return (
     <div className={authorName ? "greyall" : ""}>
       {/* pagination */}
-      <div>
-        <button onClick={() => setPageNr(pageNr - 1)}>⏮️</button>
-        <a href="#">{pageNr}</a>
-        <button onClick={() => setPageNr(pageNr + 1)}>⏭️</button>
+      <div className="flex-down">
+        <div>
+          <button onClick={() => setPageNr(pageNr - 1)}>⏮️</button>
+          <button onClick={() => setPageNr(pageNr + 1)}>⏭️</button>
+          <span>{pageNr}</span>
+          <input
+            type="text"
+            onInput={(e) => {
+              if (!e.target.value) return;
+              clearTimeout(tiid);
+              tiid = setTimeout(() => {
+                setPageNr(parseInt(e.target.value) || 0);
+              }, 300);
+            }}
+          />
+        </div>
       </div>
-
       <input
         type="checkbox"
         name=""
