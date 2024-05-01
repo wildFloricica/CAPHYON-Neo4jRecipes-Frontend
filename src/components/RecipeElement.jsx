@@ -1,9 +1,10 @@
 import { useState } from "react";
 import "./RecipeElement.css";
+import FancyList from "./FancyList";
 import App from "../App";
 /* eslint-disable react/prop-types */
 export default function RecipeElement(props) {
-  const ingredientsQuerry = props.ingredientsQuerry;
+  const iq = props.ingredientsQuerry;
   var { author, ingredients, collections, keywords, dietType, properties } =
     props.recipe;
   var { name, skillLevel, elementId } = properties;
@@ -49,32 +50,9 @@ export default function RecipeElement(props) {
             <div>cooking time: {properties.cookingTime.low}</div>
             <div>preparation time: {properties.preparationTime.low}</div>
             <div>dietType: {dietType}</div>
-
-            <div>
-              ingredients:
-              {ingredients.map((i) => (
-                <button
-                  key={crypto.randomUUID()}
-                  className={
-                    ingredientsQuerry.includes(i) ? "searched-ingredient" : ""
-                  }
-                >
-                  {i}
-                </button>
-              ))}
-            </div>
-            <div>
-              collections:
-              {collections.map((i) => (
-                <button key={crypto.randomUUID()}>{i}</button>
-              ))}
-            </div>
-            <div>
-              keywords:
-              {keywords.map((i) => (
-                <button key={crypto.randomUUID()}>{i}</button>
-              ))}
-            </div>
+            <FancyList list={ingredients} special={iq} name="ingredients" />
+            <FancyList list={keywords} name="keywords" />
+            <FancyList list={collections} name="collections" />
           </div>
           {/* authors recipes */}
           {/* make that when it toggles again to keep the data and the page and all state */}

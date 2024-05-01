@@ -1,0 +1,22 @@
+.special {
+  background-color: green !important;
+}
+
+.fancylist {
+  width: 100%;
+  max-width: inherit;
+  overflow: hidden;
+  padding: 10px;
+  justify-content: start;
+  align-items: stretch;
+  gap: 1px;
+}
+
+.fancylist > * {
+  width: fit-content;
+  min-height: 100%;
+}
+
+.fancylist:hover {
+  overflow: auto;
+}
