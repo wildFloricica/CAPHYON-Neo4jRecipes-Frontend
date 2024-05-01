@@ -8,6 +8,8 @@ const BACKEND_API = "http://localhost:3001/api/";
 var tiid = undefined;
 
 function App({ authorName }) {
+  // todo: fix multiple useles rerenders
+  // extraact pagination and sorting in separate components
   const [pageNr, setPageNr] = useState(0);
   const [recipes, setRecipes] = useState([]);
   const [querry, setQuerry] = useState("");
@@ -182,6 +184,7 @@ function App({ authorName }) {
         <tbody>
           {recipes?.map((recipe, index) => (
             <RecipeElement
+              ingredientsQuerry={ingredientsQuerry}
               allow_app_as_child={!authorName}
               oddrow={index % 2}
               key={crypto.randomUUID()}

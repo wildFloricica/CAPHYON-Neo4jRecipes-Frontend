@@ -18,3 +18,7 @@ tr * {
 .aditionalinfo * {
   cursor: default;
 }
+
+.searched-ingredient {
+  background-color: green !important;
+}

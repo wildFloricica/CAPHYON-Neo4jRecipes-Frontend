@@ -3,6 +3,7 @@ import "./RecipeElement.css";
 import App from "../App";
 /* eslint-disable react/prop-types */
 export default function RecipeElement(props) {
+  const ingredientsQuerry = props.ingredientsQuerry;
   var { author, ingredients, collections, keywords, dietType, properties } =
     props.recipe;
   var { name, skillLevel, elementId } = properties;
@@ -52,7 +53,14 @@ export default function RecipeElement(props) {
             <div>
               ingredients:
               {ingredients.map((i) => (
-                <button key={crypto.randomUUID()}>{i}</button>
+                <button
+                  key={crypto.randomUUID()}
+                  className={
+                    ingredientsQuerry.includes(i) ? "searched-ingredient" : ""
+                  }
+                >
+                  {i}
+                </button>
               ))}
             </div>
             <div>
