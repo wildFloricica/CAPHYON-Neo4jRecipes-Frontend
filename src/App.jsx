@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useDebugValue, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import RecipeElement from "./components/RecipeElement";
 import { WithContext as ReactTags } from "react-tag-input";
@@ -22,7 +22,7 @@ function App({ authorName }) {
     type: "ASC",
   });
   const ingredientsQuerry = tags.map((tag) => tag.text);
-
+  const [topComplexRecipes, setTopComplexRecipes] = useState([]);
   const [mostCommonIngredients, setMostCommonIngredients] = useState([]);
   const [mostProlificAuthors, setMostProlificAuthors] = useState([]);
 
@@ -86,8 +86,9 @@ function App({ authorName }) {
         }
       })
       .then((data) => {
-        setRecipes(data);
-        console.log(data);
+        console.log("data", data);
+        setRecipes(data.normal);
+        setTopComplexRecipes(data.topcomplex);
       });
     return () => controller.abort();
   }, [pageNr, querry, tags, sortProperty, trimRecipeName]);
@@ -166,6 +167,30 @@ function App({ authorName }) {
         <FancyList list={mostCommonIngredients} name="top 5 🥕ingredients" />
         <FancyList list={mostProlificAuthors} name="top 5 👨🏽‍🦰authors" />
       </>
+
+      <table>
+        <thead>
+          <tr>
+            <td>recipe name</td>
+            <td>author</td>
+            <td></td>
+            <td></td>
+          </tr>
+        </thead>
+        <tbody>
+          {!authorName &&
+            topComplexRecipes?.map((recipe, index) => (
+              <RecipeElement
+                ingredientsQuerry={ingredientsQuerry}
+                allow_app_as_child={true}
+                oddrow={index % 2}
+                key={crypto.randomUUID()}
+                recipe={recipe}
+              ></RecipeElement>
+            ))}
+        </tbody>
+      </table>
+
       <table>
         <thead>
           <tr>
