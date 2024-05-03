@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from "react";
+import { useDebugValue, useEffect, useState } from "react";
 import "./App.css";
 import RecipeElement from "./components/RecipeElement";
 import { WithContext as ReactTags } from "react-tag-input";
+import FancyList from "./components/FancyList";
 const BACKEND_API = "http://localhost:3001/api/";
 
 var tiid = undefined;
@@ -21,6 +22,56 @@ function App({ authorName }) {
     type: "ASC",
   });
   const ingredientsQuerry = tags.map((tag) => tag.text);
+
+  const [mostCommonIngredients, setMostCommonIngredients] = useState([]);
+  const [mostProlificAuthors, setMostProlificAuthors] = useState([]);
+
+  useEffect(() => {
+    if (recipes == undefined) return;
+    var _auth_temp = {};
+    var _ingr_temp = {};
+    recipes.forEach((recipe) => {
+      const author = recipe.author;
+      if (_auth_temp[author] == undefined) _auth_temp[author] = 1;
+      else _auth_temp[author]++;
+
+      recipe.ingredients.forEach((i) => {
+        if (_ingr_temp[i] == undefined) _ingr_temp[i] = 1;
+        else _ingr_temp[i]++;
+      });
+    });
+
+    var auth_sortable = [];
+    for (var auth of Object.keys(_auth_temp)) {
+      auth_sortable.push([auth, _auth_temp[auth]]);
+    }
+    auth_sortable.sort(function (a, b) {
+      return -a[1] + b[1];
+    });
+
+    var _mostProlificAuthors = [];
+    var _mostCommonIngredients = [];
+    _mostProlificAuthors = auth_sortable.slice(0, 5);
+
+    var ingr_sortable = [];
+    for (var i of Object.keys(_ingr_temp)) {
+      ingr_sortable.push([i, _ingr_temp[i]]);
+    }
+    console.log("ingrsortable", ingr_sortable);
+    ingr_sortable.sort(function (a, b) {
+      return -a[1] + b[1];
+    });
+    _mostCommonIngredients = ingr_sortable.slice(0, 5);
+    console.log(_mostCommonIngredients, _mostProlificAuthors);
+
+    _mostCommonIngredients = _mostCommonIngredients.map(
+      ([a, b]) => a + "/" + b
+    );
+    _mostProlificAuthors = _mostProlificAuthors.map(([a, b]) => a + "/" + b);
+
+    setMostCommonIngredients(_mostCommonIngredients);
+    setMostProlificAuthors(_mostProlificAuthors);
+  }, [recipes]);
 
   useEffect(() => {
     fetch(BACKEND_API + "all-ingredients")
@@ -93,40 +144,50 @@ function App({ authorName }) {
           />
         </div>
       </div>
-      <input
-        type="checkbox"
-        name=""
-        id="trim-input"
-        onInput={() => setTrimRecipeName((old) => !old)}
-      />
-      <label htmlFor="trim-input">Trim recipe name in backend:</label>
-
-      <h3>🔎Search recipe</h3>
-      <div className="flex-right">
-        {/* by recipe name */}
-        <label htmlFor="">
-          <input
-            type="text"
-            placeholder="🔎by name"
-            onInput={(e) => setQuerry(e.target.value)}
-          />
-        </label>
-        {/* by ingredients */}
-        <ReactTags
-          placeholder="🔎by ingredients"
-          inputFieldPosition="bottom"
-          {...{
-            tags,
-            suggestions,
-            handleDelete,
-            handleAddition,
-            handleDrag,
-            handleTagClick,
-          }}
-          autocomplete
+      {/* options */}
+      <>
+        <input
+          type="checkbox"
+          name=""
+          id="trim-input"
+          onInput={() => setTrimRecipeName((old) => !old)}
         />
-      </div>
+        <label htmlFor="trim-input">Trim recipe name in backend:</label>
+      </>
+      {/* filter recipes */}
+      <>
+        <h3>🔎Search recipe</h3>
+        <div className="flex-right">
+          {/* by recipe name */}
+          <label htmlFor="">
+            <input
+              type="text"
+              placeholder="🔎by name"
+              onInput={(e) => setQuerry(e.target.value)}
+            />
+          </label>
+          {/* by ingredients */}
+          <ReactTags
+            placeholder="🔎by ingredients"
+            inputFieldPosition="bottom"
+            {...{
+              tags,
+              suggestions,
+              handleDelete,
+              handleAddition,
+              handleDrag,
+              handleTagClick,
+            }}
+            autocomplete
+          />
+        </div>
+      </>
 
+      {/* statistics */}
+      <>
+        <FancyList list={mostCommonIngredients} name="top 5 🥕ingredients" />
+        <FancyList list={mostProlificAuthors} name="top 5 👨🏽‍🦰authors" />
+      </>
       <table>
         <thead>
           <tr>
