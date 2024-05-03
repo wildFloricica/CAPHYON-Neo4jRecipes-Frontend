@@ -28,49 +28,27 @@ function App({ authorName }) {
 
   useEffect(() => {
     if (recipes == undefined) return;
-    var _auth_temp = {};
-    var _ingr_temp = {};
+
+    var a_temp = {};
+    var i_temp = {};
+
     recipes.forEach((recipe) => {
       const author = recipe.author;
-      if (_auth_temp[author] == undefined) _auth_temp[author] = 1;
-      else _auth_temp[author]++;
-
-      recipe.ingredients.forEach((i) => {
-        if (_ingr_temp[i] == undefined) _ingr_temp[i] = 1;
-        else _ingr_temp[i]++;
-      });
+      a_temp[author] = a_temp[author] + 1 || 1;
+      recipe.ingredients.forEach((i) => (i_temp[i] = i_temp[i] + 1 || 1));
     });
 
-    var auth_sortable = [];
-    for (var auth of Object.keys(_auth_temp)) {
-      auth_sortable.push([auth, _auth_temp[auth]]);
-    }
-    auth_sortable.sort(function (a, b) {
-      return -a[1] + b[1];
-    });
+    const dothething = (obj) => {
+      var sortable = [];
+      for (var a of Object.keys(obj)) sortable.push([a, obj[a]]);
+      return sortable
+        .toSorted((a, b) => b[1] - a[1])
+        .slice(0, 5)
+        .map(([a, b]) => a + "/" + b);
+    };
 
-    var _mostProlificAuthors = [];
-    var _mostCommonIngredients = [];
-    _mostProlificAuthors = auth_sortable.slice(0, 5);
-
-    var ingr_sortable = [];
-    for (var i of Object.keys(_ingr_temp)) {
-      ingr_sortable.push([i, _ingr_temp[i]]);
-    }
-    console.log("ingrsortable", ingr_sortable);
-    ingr_sortable.sort(function (a, b) {
-      return -a[1] + b[1];
-    });
-    _mostCommonIngredients = ingr_sortable.slice(0, 5);
-    console.log(_mostCommonIngredients, _mostProlificAuthors);
-
-    _mostCommonIngredients = _mostCommonIngredients.map(
-      ([a, b]) => a + "/" + b
-    );
-    _mostProlificAuthors = _mostProlificAuthors.map(([a, b]) => a + "/" + b);
-
-    setMostCommonIngredients(_mostCommonIngredients);
-    setMostProlificAuthors(_mostProlificAuthors);
+    setMostProlificAuthors(dothething(a_temp));
+    setMostCommonIngredients(dothething(i_temp));
   }, [recipes]);
 
   useEffect(() => {
