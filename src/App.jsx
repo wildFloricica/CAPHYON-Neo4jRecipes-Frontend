@@ -4,6 +4,7 @@ import "./App.css";
 import RecipeElement from "./components/RecipeElement";
 import { WithContext as ReactTags } from "react-tag-input";
 import FancyList from "./components/FancyList";
+import SortToggle from "./components/SortToggle";
 const BACKEND_API = "http://localhost:3001/api/";
 
 var tiid = undefined;
@@ -18,8 +19,10 @@ function App({ authorName }) {
   const [suggestions, setSuggestions] = useState([]);
   const [trimRecipeName, setTrimRecipeName] = useState(false);
   const [sortProperty, setSortProperty] = useState({
-    property: "name",
-    type: "ASC",
+    order: ["recipe_name"],
+    recipe_name: "ASC",
+    ingr_count: false,
+    skillLevel: false,
   });
   const ingredientsQuerry = tags.map((tag) => tag.text);
   const [topComplexRecipes, setTopComplexRecipes] = useState([]);
@@ -87,7 +90,7 @@ function App({ authorName }) {
       })
       .then((data) => {
         console.log("data", data);
-        setRecipes(data.normal);
+        setRecipes(data?.normal);
         setTopComplexRecipes(data.topcomplex);
       });
     return () => controller.abort();
@@ -103,6 +106,16 @@ function App({ authorName }) {
   };
   const handleTagClick = () => {};
   console.log("rerender");
+
+  function updateSort(obj) {
+    const column = Object.keys(obj)[0];
+    setSortProperty((old) => {
+      old.order = old.order.filter((it) => it != column);
+      if (obj[column]) old.order = [column, ...old.order];
+      return { recipe_name: "ASC", ...Object.assign(old, obj) };
+    });
+  }
+
   return (
     <div className={authorName ? "greyall" : ""}>
       {/* pagination */}
@@ -199,47 +212,17 @@ function App({ authorName }) {
             <td>
               <div className=" sortertoggle flex-right">
                 number of ingredients
-                <div className="flex-down">
-                  <button
-                    className="up"
-                    onClick={() =>
-                      setSortProperty({ property: "ingr_count", type: "ASC" })
-                    }
-                  >
-                    ASC
-                  </button>
-                  <button
-                    className="down"
-                    onClick={() =>
-                      setSortProperty({ property: "ingr_count", type: "DESC" })
-                    }
-                  >
-                    DES
-                  </button>
-                </div>
+                <SortToggle
+                  handlechange={(t) => updateSort({ ingr_count: t })}
+                />
               </div>
             </td>
             <td>
               <div className="sortertoggle flex-right">
                 skill level
-                <div className="flex-down">
-                  <button
-                    className="up"
-                    onClick={() =>
-                      setSortProperty({ property: "skillLevel", type: "ASC" })
-                    }
-                  >
-                    ASC
-                  </button>
-                  <button
-                    className="down"
-                    onClick={() =>
-                      setSortProperty({ property: "skillLevel", type: "DESC" })
-                    }
-                  >
-                    DES
-                  </button>
-                </div>
+                <SortToggle
+                  handlechange={(t) => updateSort({ skillLevel: t })}
+                />
                 <div />
               </div>
             </td>
