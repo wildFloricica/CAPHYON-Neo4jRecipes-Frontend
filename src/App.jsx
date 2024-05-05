@@ -166,31 +166,31 @@ function App({ authorName }) {
       <>
         <FancyList list={mostCommonIngredients} name="top 5 🥕ingredients" />
         <FancyList list={mostProlificAuthors} name="top 5 👨🏽‍🦰authors" />
+        <h1>Top 5 complex recipes</h1>
+        <table>
+          <thead>
+            <tr>
+              <td>recipe name</td>
+              <td>author</td>
+              <td></td>
+              <td></td>
+            </tr>
+          </thead>
+          <tbody>
+            {!authorName &&
+              topComplexRecipes?.map((recipe, index) => (
+                <RecipeElement
+                  ingredientsQuerry={ingredientsQuerry}
+                  allow_app_as_child={true}
+                  oddrow={index % 2}
+                  key={crypto.randomUUID()}
+                  recipe={recipe}
+                ></RecipeElement>
+              ))}
+          </tbody>
+        </table>
       </>
-
-      <table>
-        <thead>
-          <tr>
-            <td>recipe name</td>
-            <td>author</td>
-            <td></td>
-            <td></td>
-          </tr>
-        </thead>
-        <tbody>
-          {!authorName &&
-            topComplexRecipes?.map((recipe, index) => (
-              <RecipeElement
-                ingredientsQuerry={ingredientsQuerry}
-                allow_app_as_child={true}
-                oddrow={index % 2}
-                key={crypto.randomUUID()}
-                recipe={recipe}
-              ></RecipeElement>
-            ))}
-        </tbody>
-      </table>
-
+      <h1>Recipes</h1>
       <table>
         <thead>
           <tr>
