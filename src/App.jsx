@@ -63,6 +63,13 @@ function App({ authorName }) {
   }, []);
 
   useEffect(() => {
+    if (false && localStorage.getItem("temppp")) {
+      const data = JSON.parse(localStorage.getItem("temppp"));
+      setRecipes(data?.normal);
+      setTopComplexRecipes(data.topcomplex);
+      return;
+    }
+
     const controller = new AbortController();
     const signal = controller.signal;
 
@@ -117,50 +124,20 @@ function App({ authorName }) {
   }
 
   return (
-    <div className={authorName ? "greyall" : ""}>
-      {/* pagination */}
-      <div className="flex-down">
-        <div>
-          <button onClick={() => setPageNr(pageNr - 1)}>⏮️</button>
-          <button onClick={() => setPageNr(pageNr + 1)}>⏭️</button>
-          <span>{pageNr}</span>
-          <input
-            type="text"
-            onInput={(e) => {
-              if (!e.target.value) return;
-              clearTimeout(tiid);
-              tiid = setTimeout(() => {
-                setPageNr(parseInt(e.target.value) || 0);
-              }, 300);
-            }}
-          />
-        </div>
-      </div>
-      {/* options */}
-      <>
-        <input
-          type="checkbox"
-          name=""
-          id="trim-input"
-          onInput={() => setTrimRecipeName((old) => !old)}
-        />
-        <label htmlFor="trim-input">Trim recipe name in backend:</label>
-      </>
+    <div className={authorName ? "nested-table" : ""}>
       {/* filter recipes */}
       <>
-        <h3>🔎Search recipe</h3>
-        <div className="flex-right">
-          {/* by recipe name */}
+        <div className="flex-right justify-start">
+          <h3>🔎Filter by</h3>
           <label htmlFor="">
             <input
               type="text"
-              placeholder="🔎by name"
+              placeholder="name"
               onInput={(e) => setQuerry(e.target.value)}
             />
           </label>
-          {/* by ingredients */}
           <ReactTags
-            placeholder="🔎by ingredients"
+            placeholder="ingredients"
             inputFieldPosition="bottom"
             {...{
               tags,
@@ -175,77 +152,112 @@ function App({ authorName }) {
         </div>
       </>
 
-      {/* statistics */}
-      <>
-        <FancyList list={mostCommonIngredients} name="top 5 🥕ingredients" />
-        <FancyList list={mostProlificAuthors} name="top 5 👨🏽‍🦰authors" />
-        <h1>Top 5 complex recipes</h1>
-        <table>
+      <div className="flex-right tables-hugger">
+        <table className="get-sticky">
           <thead>
             <tr>
-              <td>recipe name</td>
-              <td>author</td>
-              <td></td>
-              <td></td>
+              <td>Name</td>
+              <td>Author</td>
+              <td>
+                <div className=" sortertoggle flex-right">
+                  ingredients
+                  <SortToggle
+                    handlechange={(t) => updateSort({ ingr_count: t })}
+                  />
+                </div>
+              </td>
+              <td>
+                <div className="sortertoggle flex-right">
+                  skill level
+                  <SortToggle
+                    handlechange={(t) => updateSort({ skillLevel: t })}
+                  />
+                  <div />
+                </div>
+              </td>
             </tr>
           </thead>
           <tbody>
-            {!authorName &&
-              topComplexRecipes?.map((recipe, index) => (
-                <RecipeElement
-                  ingredientsQuerry={ingredientsQuerry}
-                  allow_app_as_child={true}
-                  oddrow={index % 2}
-                  key={crypto.randomUUID()}
-                  recipe={recipe}
-                ></RecipeElement>
-              ))}
+            {recipes?.map((recipe, index) => (
+              <RecipeElement
+                ingredientsQuerry={ingredientsQuerry}
+                allow_app_as_child={!authorName}
+                oddrow={index % 2}
+                key={crypto.randomUUID()}
+                recipe={recipe}
+              ></RecipeElement>
+            ))}
           </tbody>
-        </table>
-      </>
-      <h1>Recipes</h1>
-      <table>
-        <thead>
-          <tr>
-            <td>recipe name</td>
-            <td>author</td>
-            <td>
-              <div className=" sortertoggle flex-right">
-                number of ingredients
-                <SortToggle
-                  handlechange={(t) => updateSort({ ingr_count: t })}
-                />
-              </div>
-            </td>
-            <td>
-              <div className="sortertoggle flex-right">
-                skill level
-                <SortToggle
-                  handlechange={(t) => updateSort({ skillLevel: t })}
-                />
-                <div />
-              </div>
-            </td>
-          </tr>
-        </thead>
-        <tbody>
-          {recipes?.map((recipe, index) => (
-            <RecipeElement
-              ingredientsQuerry={ingredientsQuerry}
-              allow_app_as_child={!authorName}
-              oddrow={index % 2}
-              key={crypto.randomUUID()}
-              recipe={recipe}
-            ></RecipeElement>
-          ))}
-        </tbody>
 
-        <tfoot>
-          <tr className={recipes?.length ? "hide" : ""}>
-            <td colSpan={4}>End of recipees</td>
-          </tr>
-        </tfoot>
-      </table>
+          <tfoot>
+            <tr className={recipes?.length ? "hide" : ""}>
+              <td colSpan={4}>End of recipees</td>
+            </tr>
+
+            <tr className="sticky-pagination">
+              <td colSpan={4}>
+                <div className="flex-down">
+                  <div className="flex-right">
+                    <span>page: {pageNr}</span>
+                    <button onClick={() => setPageNr(pageNr - 1)}>⏮️</button>
+                    <input
+                      width={10}
+                      type="text"
+                      onInput={(e) => {
+                        if (!e.target.value) return;
+                        clearTimeout(tiid);
+                        tiid = setTimeout(() => {
+                          setPageNr(parseInt(e.target.value) || 0);
+                        }, 300);
+                      }}
+                    />
+                    <button onClick={() => setPageNr(pageNr + 1)}>⏭️</button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+
+        <div className={"get-sticky " + (authorName ? "hide" : "")}>
+          <td colSpan={4}>
+            <h2>top 5 most complex</h2>
+            <table>
+              <thead>
+                <tr>
+                  <td>recipe name</td>
+                  <td>author</td>
+                  <td>ingredients</td>
+                  <td>skill level</td>
+                </tr>
+              </thead>
+              <tbody>
+                {!authorName &&
+                  topComplexRecipes?.map((recipe, index) => (
+                    <RecipeElement
+                      ingredientsQuerry={ingredientsQuerry}
+                      allow_app_as_child={true}
+                      oddrow={index % 2}
+                      key={crypto.randomUUID()}
+                      recipe={recipe}
+                    ></RecipeElement>
+                  ))}
+
+                {/* <tr>
+                  <td colSpan={4}></td>
+                </tr> */}
+              </tbody>
+            </table>
+            <div className="bg-myblue comfy">
+              <FancyList
+                list={mostCommonIngredients}
+                name="top 5 🥕ingredients"
+              />
+              <FancyList list={mostProlificAuthors} name="top 5 👨🏽‍🦰authors" />
+            </div>
+          </td>
+        </div>
+      </div>
     </div>
   );
 }

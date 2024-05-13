@@ -37,6 +37,7 @@
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .fancylist {
+  padding-right: 10px;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
@@ -47,4 +48,11 @@
   align-items: center;
   margin: 0;
   padding: 0;
+}
+
+.fancy-list > * {
+}
+
+.bg-myblue {
+  background-color: rgba(157, 148, 255, 0.71);
 }

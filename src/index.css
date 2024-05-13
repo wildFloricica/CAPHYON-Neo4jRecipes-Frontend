@@ -39,20 +39,24 @@ body {
   margin: 5px;
 }
 @media (prefers-color-scheme: dark) {
-  html,
-  body {
-    color: aliceblue !important;
-    background-color: black !important;
-  }
-
   :root {
     --opacity_logo: 0.6 !important;
   }
 }
 
-.greyall * {
+.nested-table {
   color: aliceblue;
-  background-color: rgba(40, 40, 40, 0.964);
+}
+
+.nested-table table {
+  filter: hue-rotate(180deg);
+}
+
+.nested-table table {
+  filter: hue-rotate(180deg);
+}
+.nested-table thead {
+  z-index: 9999;
 }
 
 @keyframes patrol {
@@ -121,4 +125,15 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+html,
+body {
+  background: rgba(238, 163, 197, 0.865);
+  color: black;
+  background: linear-gradient(
+    38deg,
+    rgba(255, 151, 197, 1) 0%,
+    rgba(157, 148, 255, 1) 100%
+  );
 }

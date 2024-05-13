@@ -2,48 +2,38 @@ table * {
   padding: 5px 8px;
   margin-left: 20px;
   margin-right: auto;
-
+  width: 100%;
+  max-width: inherit;
   text-align: justify;
   position: relative;
   transition: 0.8s;
 }
 
-table td {
-  border: 1px solid purple;
-}
 table {
   overflow: hidden;
-}
-.rowhover > *:hover {
-  background-color: rgba(169, 169, 0, 1);
-  z-index: 10000;
-  transition: 0.4s;
+  box-shadow: 0px 15px 75px 45px rgba(33, 1, 33, 0.71);
+  width: 500px;
+  max-width: 500px;
+  border-radius: 10px;
+  transition: 0s;
 }
 table tr {
   width: 100%;
-  background-color: rgb(62, 0, 62);
-  color: aliceblue;
+  color: black;
   transition: 0s;
 }
-.oddrow {
-}
-
 table,
 thead {
   -webkit-box-shadow: 0px 15px 75px 45px rgba(33, 1, 33, 0.71);
   -moz-box-shadow: 0px 15px 75px 45px rgba(33, 1, 33, 0.71);
 }
-table {
-  box-shadow: 0px 15px 75px 45px rgba(33, 1, 33, 0.71);
-  max-width: 500px;
-  border-radius: 10px;
-  transition: 0s;
-
-  background-color: purple;
+.rowhover > *:hover {
+  background: rgba(255, 151, 198, 0.619);
+  z-index: 99;
+  transition: 0.4s;
 }
 .rowhover:hover {
-  background-color: rgba(169, 169, 0, 1);
-  color: aliceblue;
+  background: rgba(255, 151, 198, 0.619);
   transition: 0.4;
 }
 /* thead,
@@ -54,25 +44,25 @@ thead *:hover {
   columns: aliceblue !important;
 } */
 
-table * {
-  width: 100%;
-  max-width: inherit;
-}
 thead {
   position: sticky;
   top: 20px;
-  z-index: 1999900;
+  z-index: 999;
+  background: rgba(157, 148, 255, 0.71);
+
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
     rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
+thead * {
+  background-color: inherit;
+}
 .flex-right {
   display: flex;
   align-items: center;
   justify-content: start;
 }
-
 /*  */
 
 .sortertoggle * {
@@ -111,4 +101,43 @@ thead {
 
 .active {
   background-color: purple !important;
+}
+@media (prefers-color-scheme: dark) {
+}
+
+.get-sticky {
+  position: sticky;
+  top: 10%;
+  align-self: flex-start;
+}
+.tables-hugger {
+  gap: 10px;
+}
+
+.sticky-pagination {
+  position: sticky;
+  bottom: 0px;
+  background-color: rgba(157, 148, 255, 1);
+
+  align-self: flex-start;
+}
+
+.sticky-pagination * {
+  margin: 0;
+}
+
+.sticky-pagination input {
+  width: 50px;
+}
+
+.justify-start {
+  justify-content: start !important;
+}
+
+.comfy {
+  padding: 6px 10px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  width: 500px;
+  overflow: hidden;
 }
