@@ -24,6 +24,7 @@ table tr {
 }
 table,
 thead {
+  box-shadow: 0px 15px 75px 45px rgba(33, 1, 33, 0.71);
   -webkit-box-shadow: 0px 15px 75px 45px rgba(33, 1, 33, 0.71);
   -moz-box-shadow: 0px 15px 75px 45px rgba(33, 1, 33, 0.71);
 }
@@ -77,6 +78,10 @@ thead * {
 
 .sortertoggle {
   gap: 0;
+  margin: 0;
+}
+.sortertoggle > div {
+  margin: 0px 10px;
 }
 
 .fillheight {
@@ -85,18 +90,14 @@ thead * {
 
 .sortertoggle .up {
   border-radius: 0;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
 }
 .sortertoggle .down {
   border-radius: 0;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
 }
 
 .sortertoggle button {
-  padding: 5px 8px;
-  background-color: gray;
+  padding: 2px 7px;
+  background-color: rgba(128, 128, 128, 0.557);
 }
 
 .active {

@@ -17,7 +17,6 @@ function App({ authorName }) {
   const [querry, setQuerry] = useState("");
   const [tags, setTags] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
-  const [trimRecipeName, setTrimRecipeName] = useState(false);
   const [sortProperty, setSortProperty] = useState({
     order: ["recipe_name"],
     recipe_name: "ASC",
@@ -63,7 +62,7 @@ function App({ authorName }) {
   }, []);
 
   useEffect(() => {
-    if (false && localStorage.getItem("temppp")) {
+    if (0 && localStorage.getItem("temppp")) {
       const data = JSON.parse(localStorage.getItem("temppp"));
       setRecipes(data?.normal);
       setTopComplexRecipes(data.topcomplex);
@@ -83,7 +82,6 @@ function App({ authorName }) {
       body: JSON.stringify({
         authorName,
         sortProperty,
-        trimRecipeName,
         pageNr,
         ingredientsQuerry,
         querry,
@@ -101,7 +99,7 @@ function App({ authorName }) {
         setTopComplexRecipes(data.topcomplex);
       });
     return () => controller.abort();
-  }, [pageNr, querry, tags, sortProperty, trimRecipeName]);
+  }, [pageNr, querry, tags, sortProperty]);
 
   const handleDelete = (i) => setTags(tags.filter((tag, index) => index !== i));
   const handleAddition = (tag) => setTags([...tags, tag]);
@@ -125,7 +123,7 @@ function App({ authorName }) {
 
   return (
     <div className={authorName ? "nested-table" : ""}>
-      {/* filter recipes */}
+      {/* filtering recipes */}
       <>
         <div className="flex-right justify-start">
           <h3>🔎Filter by</h3>
@@ -160,18 +158,18 @@ function App({ authorName }) {
               <td>Author</td>
               <td>
                 <div className=" sortertoggle flex-right">
-                  ingredients
                   <SortToggle
                     handlechange={(t) => updateSort({ ingr_count: t })}
                   />
+                  ingredients
                 </div>
               </td>
               <td>
                 <div className="sortertoggle flex-right">
-                  skill level
                   <SortToggle
                     handlechange={(t) => updateSort({ skillLevel: t })}
                   />
+                  skill level
                   <div />
                 </div>
               </td>

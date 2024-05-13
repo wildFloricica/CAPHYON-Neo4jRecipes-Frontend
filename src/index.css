@@ -129,11 +129,6 @@ body {
 
 html,
 body {
-  background: rgba(238, 163, 197, 0.865);
-  color: black;
-  background: linear-gradient(
-    38deg,
-    rgba(255, 151, 197, 1) 0%,
-    rgba(157, 148, 255, 1) 100%
-  );
+  background: rgba(157, 148, 255, 0.7);
+  min-height: 100vh;
 }

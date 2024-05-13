@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import "./FancyList.css";
 export default function FancyList({
   list = [],

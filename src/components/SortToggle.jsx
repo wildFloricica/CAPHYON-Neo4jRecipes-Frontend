@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 
 export default function SortToggle({ handlechange = () => {} }) {
@@ -12,6 +13,8 @@ export default function SortToggle({ handlechange = () => {} }) {
     console.log("asdasdasdasd");
   }, [active]);
 
+  // eslint is playing with me, adding handlechange to the list just causes infinite rerenders what??
+
   return (
     <div className="flex-down">
       <button
@@ -19,14 +22,14 @@ export default function SortToggle({ handlechange = () => {} }) {
         className={"up " + (active == "up" ? "active" : "")}
         onClick={() => setActive((old) => (old == "up" ? "" : "up"))}
       >
-        ⬆️
+        ↑
       </button>
       <button
         style={{ transition: "none" }}
         className={"down " + (active == "down" ? "active" : "")}
         onClick={() => setActive((old) => (old == "down" ? "" : "down"))}
       >
-        ⬇️
+        ↓
       </button>
     </div>
   );
