@@ -26,7 +26,7 @@ export default function RecipeElement(props) {
         <td
           onClick={(e) => {
             e.stopPropagation();
-            if (props?.allow_app_as_child)
+            if (props?.allow_app_as_child && author)
               setShowAuthorsRecipes(!showAuthorsRecipes);
           }}
         >
