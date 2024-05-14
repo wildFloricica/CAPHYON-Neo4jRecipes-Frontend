@@ -35,7 +35,8 @@
           if (localStorage.getItem("understood-logo")) msg.remove();
           logo.onclick = () => {
             clickcount++;
-            if (clickcount == 1 && msg) msg.textContent = "drag me";
+            if (clickcount == 1 && msg) msg.textContent = "move mouse";
+
             if (clickcount == 2 && msg) {
               msg.remove();
               localStorage.setItem("understood-logo", "true");
@@ -50,6 +51,7 @@
 
           window.addEventListener("mousemove", (e) => {
             if (canFollow) {
+              if (clickcount == 1 && msg) msg.textContent = "click me again";
               logo.style.left = e.clientX - widthhh + "px";
               logo.style.top = e.clientY - heightt + "px";
             }
