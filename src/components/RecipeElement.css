@@ -30,3 +30,10 @@ tr * {
 .searched-ingredient {
   background-color: green !important;
 }
+
+.infos {
+  border: 2px solid purple;
+  border-radius: 10px;
+  overflow: hidden;
+  min-width: 100%;
+}

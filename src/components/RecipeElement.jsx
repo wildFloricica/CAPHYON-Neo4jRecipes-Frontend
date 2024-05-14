@@ -19,7 +19,7 @@ export default function RecipeElement(props) {
           if (additionalInfo) setShowAuthorsRecipes(false);
           setAdditionalInfo(!additionalInfo);
         }}
-        className={"rowhover" + (props.oddrow ? " oddrow" : "")}
+        className={"rowhover" + (props.oddrow ? " oddrow " : "")}
         key={elementId}
       >
         <td>{name}</td>
@@ -45,7 +45,7 @@ export default function RecipeElement(props) {
       >
         <td style={{ padding: 0 }} colSpan={4}>
           {/* additional info */}
-          <div className={additionalInfo ? "" : "hide"}>
+          <div className={"infos " + (additionalInfo ? "" : "hide")}>
             <div>📝description: {properties.description}</div>
             <div>⌛cooking time: {properties.cookingTime.low}</div>
             <div>⌛preparation time: {properties.preparationTime.low}</div>
@@ -56,7 +56,7 @@ export default function RecipeElement(props) {
           </div>
           {/* authors recipes */}
           {/* make that when it toggles again to keep the data and the page and all state */}
-          <div>{showAuthorsRecipes ? <App authorName={author} /> : null}</div>
+          {showAuthorsRecipes ? <App authorName={author} /> : null}
         </td>
       </tr>
     </>
