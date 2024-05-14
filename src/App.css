@@ -5,31 +5,28 @@ table * {
   width: 100%;
   max-width: inherit;
   text-align: justify;
-  position: relative;
   transition: 0.8s;
 }
 
 table {
+  position: relative;
+  z-index: 1;
   box-shadow: 0px 15px 75px 45px rgba(33, 1, 33, 0.71);
   width: 500px;
   max-width: 500px;
   border-radius: 10px;
   transition: 0s;
 }
+table * {
+}
 table tr {
   width: 100%;
   color: black;
   transition: 0s;
 }
-table,
-thead {
-  box-shadow: 0px 15px 75px 45px rgba(33, 1, 33, 0.71);
-  -webkit-box-shadow: 0px 15px 75px 45px rgba(33, 1, 33, 0.71);
-  -moz-box-shadow: 0px 15px 75px 45px rgba(33, 1, 33, 0.71);
-}
+
 .rowhover > *:hover {
   background: rgba(255, 151, 198, 0.619);
-  z-index: 99;
   transition: 0.4s;
 }
 .rowhover:hover {
@@ -44,15 +41,15 @@ thead *:hover {
   columns: aliceblue !important;
 } */
 
+table {
+  position: relative;
+}
 thead {
+  /* z-index: 1; */
   position: sticky;
   top: 20px;
-  z-index: 999;
-  background: rgba(157, 148, 255, 0.71);
-
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
-    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
-    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  /* z-index: 999; */
+  background: rgb(157, 148, 255);
 }
 
 thead * {
@@ -106,10 +103,11 @@ thead * {
 }
 
 .get-sticky {
-  position: sticky;
+  position: relative;
   top: 10%;
   align-self: flex-start;
 }
+
 .tables-hugger {
   gap: 10px;
 }
@@ -140,4 +138,13 @@ thead * {
   box-sizing: border-box;
   width: 500px;
   overflow: hidden;
+}
+
+button:active {
+  background-color: green;
+  transition: 0.3s;
+}
+
+.more-z-index thead {
+  z-index: 2;
 }

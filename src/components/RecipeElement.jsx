@@ -56,7 +56,7 @@ export default function RecipeElement(props) {
           </div>
           {/* authors recipes */}
           {/* make that when it toggles again to keep the data and the page and all state */}
-          {showAuthorsRecipes ? <App authorName={author} /> : null}
+          <div>{showAuthorsRecipes ? <App authorName={author} /> : null}</div>
         </td>
       </tr>
     </>

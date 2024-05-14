@@ -151,7 +151,7 @@ function App({ authorName }) {
       </>
 
       <div className="flex-right tables-hugger">
-        <table className="get-sticky">
+        <table className={"get-sticky "}>
           <thead>
             <tr>
               <td>Name</td>
@@ -218,7 +218,7 @@ function App({ authorName }) {
         </table>
 
         <div className={"get-sticky " + (authorName ? "hide" : "")}>
-          <td colSpan={4}>
+          <div>
             <h2>top 5 most complex</h2>
             <table>
               <thead>
@@ -253,7 +253,7 @@ function App({ authorName }) {
               />
               <FancyList list={mostProlificAuthors} name="top 5 👨🏽‍🦰authors" />
             </div>
-          </td>
+          </div>
         </div>
       </div>
     </div>
