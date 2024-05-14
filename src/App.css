@@ -26,11 +26,11 @@ table tr {
 }
 
 .rowhover > *:hover {
-  background: rgba(255, 151, 198, 0.619);
+  background: rgba(187, 178, 245, 0.718);
   transition: 0.4s;
 }
 .rowhover:hover {
-  background: rgba(255, 151, 198, 0.619);
+  background: rgba(187, 178, 245, 0.718);
   transition: 0.4;
 }
 /* thead,
