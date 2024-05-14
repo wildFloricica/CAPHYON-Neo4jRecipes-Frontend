@@ -62,13 +62,6 @@ function App({ authorName }) {
   }, []);
 
   useEffect(() => {
-    if (0 && localStorage.getItem("temppp")) {
-      const data = JSON.parse(localStorage.getItem("temppp"));
-      setRecipes(data?.normal);
-      setTopComplexRecipes(data.topcomplex);
-      return;
-    }
-
     const controller = new AbortController();
     const signal = controller.signal;
 
@@ -94,7 +87,7 @@ function App({ authorName }) {
         }
       })
       .then((data) => {
-        console.log("data", data);
+        if (!data?.normal?.length && pageNr != 0) setPageNr(0);
         setRecipes(data?.normal);
         setTopComplexRecipes(data.topcomplex);
       });
@@ -110,7 +103,6 @@ function App({ authorName }) {
     setTags(newTags);
   };
   const handleTagClick = () => {};
-  console.log("rerender");
 
   function updateSort(obj) {
     const column = Object.keys(obj)[0];
