@@ -214,7 +214,10 @@ function App({ authorName }) {
           </tfoot>
         </table>
 
-        <div className={"get-sticky " + (authorName ? "hide" : "")}>
+        <div
+          style={{ position: "sticky", top: "10px" }}
+          className={"get-sticky " + (authorName ? "hide" : "")}
+        >
           <div>
             <h2>top 5 most complex</h2>
             <table>
