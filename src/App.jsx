@@ -18,7 +18,7 @@ function App({ authorName }) {
   const [tags, setTags] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
   const [sortProperty, setSortProperty] = useState({
-    order: ["recipe_name"],
+    order: [],
     recipe_name: "ASC",
     ingr_count: false,
     skillLevel: false,
@@ -116,7 +116,7 @@ function App({ authorName }) {
     const column = Object.keys(obj)[0];
     setSortProperty((old) => {
       old.order = old.order.filter((it) => it != column);
-      if (obj[column]) old.order = [column, ...old.order];
+      if (obj[column]) old.order = [...old.order, column];
       return { recipe_name: "ASC", ...Object.assign(old, obj) };
     });
   }
