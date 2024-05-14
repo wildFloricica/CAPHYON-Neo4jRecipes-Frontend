@@ -21,6 +21,7 @@
         <img src="./src/assets/logo_Caphyon_RGB.webp" alt="" />
       </div>
       <div id="wildfloricica-logo" class="animate">
+        <span class="logo-message">click on me to drag</span>
         <img class="wilddd" src="./src/assets/wildfloricica_v1_0.png" alt="" />
       </div>
 
@@ -28,19 +29,24 @@
         window.addEventListener("load", (e) => {
           const logo = document.querySelector("#wildfloricica-logo");
           var canFollow = false;
+          var clickcount = 0;
+          const msg = document.querySelector(".logo-message");
           logo.onclick = () => {
+            clickcount++;
+            if (clickcount == 1) msg.textContent = "now drag me";
+            if (clickcount == 2) msg.style.display = "none";
             canFollow = !canFollow;
             logo.classList.toggle("animate");
           };
 
           const widthhh = logo.getBoundingClientRect().width / 2;
           const heightt = logo.getBoundingClientRect().height / 2;
+          logo.style.bottom = "unset";
 
           window.addEventListener("mousemove", (e) => {
             if (canFollow) {
               logo.style.left = e.clientX - widthhh + "px";
               logo.style.top = e.clientY - heightt + "px";
-              logo.style.bottom = "unset";
             }
           });
         });

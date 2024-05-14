@@ -1,2 +1,5 @@
 
 debounoce does not work with butttons left and right
+
+
+localstorate was affecting mouse move only when not profiling and not on incognito
