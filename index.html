@@ -21,7 +21,7 @@
         <img src="./src/assets/logo_Caphyon_RGB.webp" alt="" />
       </div>
       <div id="wildfloricica-logo" class="animate">
-        <span class="logo-message">click on me to drag</span>
+        <span class="logo-message">click me</span>
         <img class="wilddd" src="./src/assets/wildfloricica_v1_0.png" alt="" />
       </div>
 
@@ -31,10 +31,15 @@
           var canFollow = false;
           var clickcount = 0;
           const msg = document.querySelector(".logo-message");
+
+          if (localStorage.getItem("understood-logo")) msg.remove();
           logo.onclick = () => {
             clickcount++;
-            if (clickcount == 1) msg.textContent = "now drag me";
-            if (clickcount == 2) msg.style.display = "none";
+            if (clickcount == 1 && msg) msg.textContent = "drag me";
+            if (clickcount == 2 && msg) {
+              msg.remove();
+              localStorage.setItem("understood-logo", "true");
+            }
             canFollow = !canFollow;
             logo.classList.toggle("animate");
           };
