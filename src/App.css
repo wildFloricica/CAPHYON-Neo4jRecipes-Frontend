@@ -148,3 +148,21 @@ button:active {
 .more-z-index thead {
   z-index: 2;
 }
+
+.sticky-pagination * {
+  margin: 1px;
+  padding: 1px;
+}
+.sticky-pagination * {
+  background-color: rgba(128, 128, 128, 0.557);
+}
+
+.name-and-pagination * {
+  margin: 0;
+  padding: 0;
+}
+.name-and-pagination button {
+  padding: 5px 7px;
+
+  border: 1px solid purple;
+}

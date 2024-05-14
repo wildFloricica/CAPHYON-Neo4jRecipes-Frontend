@@ -154,7 +154,27 @@ function App({ authorName }) {
         <table className={"get-sticky "}>
           <thead>
             <tr>
-              <td>Name</td>
+              <td className="name-and-pagination">
+                <div className="flex-down">
+                  Name
+                  <div className="flex-right sticky-pagination">
+                    <button onClick={() => setPageNr(pageNr - 1)}>←</button>
+                    <button className="pagenr"> {pageNr}</button>
+                    <button onClick={() => setPageNr(pageNr + 1)}>→</button>
+                    <input
+                      width={10}
+                      type="text"
+                      onInput={(e) => {
+                        if (!e.target.value) return;
+                        clearTimeout(tiid);
+                        tiid = setTimeout(() => {
+                          setPageNr(parseInt(e.target.value) || 0);
+                        }, 300);
+                      }}
+                    />
+                  </div>
+                </div>
+              </td>
               <td>Author</td>
               <td>
                 <div className=" sortertoggle flex-right">
@@ -190,29 +210,6 @@ function App({ authorName }) {
           <tfoot>
             <tr className={recipes?.length ? "hide" : ""}>
               <td colSpan={4}>End of recipees</td>
-            </tr>
-
-            <tr className="sticky-pagination">
-              <td colSpan={4}>
-                <div className="flex-down">
-                  <div className="flex-right">
-                    <span>page: {pageNr}</span>
-                    <button onClick={() => setPageNr(pageNr - 1)}>⏮️</button>
-                    <input
-                      width={10}
-                      type="text"
-                      onInput={(e) => {
-                        if (!e.target.value) return;
-                        clearTimeout(tiid);
-                        tiid = setTimeout(() => {
-                          setPageNr(parseInt(e.target.value) || 0);
-                        }, 300);
-                      }}
-                    />
-                    <button onClick={() => setPageNr(pageNr + 1)}>⏭️</button>
-                  </div>
-                </div>
-              </td>
             </tr>
           </tfoot>
         </table>
